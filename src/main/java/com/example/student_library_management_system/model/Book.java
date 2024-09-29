@@ -1,10 +1,14 @@
 package com.example.student_library_management_system.model;
 
 import com.example.student_library_management_system.enums.Genre;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,5 +34,19 @@ public class Book {
 
     @Column(name="quantity")
     private int quantity;
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn
+    private Author author;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "book",  cascade = CascadeType.ALL)
+    private List<Transaction> transactionForBook = new ArrayList<>();
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn
+    private Card card;
 
 }

@@ -10,7 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -40,4 +42,12 @@ public class Card {
     @OneToOne
     @JoinColumn
     private Student student;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "card",  cascade = CascadeType.ALL)
+    private List<Book> booksAssignedToCard = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "card",  cascade = CascadeType.ALL)
+    private List<Transaction> transactionsForCard = new ArrayList<>();
 }
