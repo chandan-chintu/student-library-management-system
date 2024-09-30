@@ -1,9 +1,11 @@
 package com.example.student_library_management_system.model;
 
 import com.example.student_library_management_system.enums.Genre;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
+@Builder
 public class Book {
 
     @Id
@@ -35,7 +38,7 @@ public class Book {
     @Column(name="quantity")
     private int quantity;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Author author;
@@ -44,7 +47,7 @@ public class Book {
     @OneToMany(mappedBy = "book",  cascade = CascadeType.ALL)
     private List<Transaction> transactionForBook = new ArrayList<>();
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Card card;

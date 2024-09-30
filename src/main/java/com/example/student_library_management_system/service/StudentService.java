@@ -30,4 +30,9 @@ public class StudentService {
         studentRepository.save(student);
         return "Student and card saved successfully";
     }
+
+    public String deleteStudentById(int studentId){
+        studentRepository.deleteById(studentId);
+        return "Student deleted successfully";
+    }
 }

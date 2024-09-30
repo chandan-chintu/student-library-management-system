@@ -2,9 +2,11 @@ package com.example.student_library_management_system.model;
 
 import com.example.student_library_management_system.enums.TransactionName;
 import com.example.student_library_management_system.enums.TransactionStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "transaction")
+@Builder
 public class Transaction {
 
     @Id
@@ -41,12 +44,12 @@ public class Transaction {
     @Column(name="due_date")
     private Date dueDate;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Book book;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne
     @JoinColumn
     private Card card;
