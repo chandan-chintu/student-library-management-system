@@ -29,4 +29,29 @@ public class BookController {
         return bookList;
     }
 
+    @GetMapping("/findPage")
+    public List<Book> getAllBookBasedOnPagination(@RequestParam("pageno") int pageNo, @RequestParam("pagesize") int pageSize,@RequestParam("sortparam") String sortParam){
+        List<Book> bookList= bookService.getBookOnPagination(pageNo,pageSize,sortParam);
+        return bookList;
+    }
+
+    @GetMapping("/findByTitle")
+    public Book getBookByTitle(@RequestParam("title") String title){
+       Book book= bookService.getBookByTitle(title);
+        return book;
+    }
+
+    @GetMapping("/findByGenre")
+    public List<Book> getBookByGenre(@RequestParam("genre") String genre){
+        List<Book> bookList= bookService.getBookByGenre(genre);
+        return bookList;
+    }
+
+    @GetMapping("/findByTitleAndPages")
+    public Book getBookByTitle(@RequestParam("title") String title, @RequestParam("pages") int pages){
+        Book book= bookService.getBookByTitleAndPages(title,pages);
+        return book;
+    }
+
+
 }
