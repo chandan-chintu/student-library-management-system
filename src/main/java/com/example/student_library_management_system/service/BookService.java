@@ -6,6 +6,8 @@ import com.example.student_library_management_system.model.Book;
 import com.example.student_library_management_system.repository.AuthorRepsitory;
 import com.example.student_library_management_system.repository.BookRepository;
 import com.example.student_library_management_system.requestdto.BookRequestDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class BookService {
+
+    Logger logger = LoggerFactory.getLogger(BookService.class);
 
     @Autowired
     private AuthorRepsitory authorRepsitory;
@@ -69,7 +73,7 @@ public class BookService {
 
 sorting - arranging the data based on ascedning or descending order of the field
      */
-    
+
 
     public List<Book> getBookOnPagination(int pageNo, int pageSize, String sortParameter){
         Page<Book> bookPage = bookRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortParameter).ascending()));
@@ -81,7 +85,13 @@ sorting - arranging the data based on ascedning or descending order of the field
     }
 
     public Book getBookByTitle(String title){
+        logger.info("getBookByTitle method started");
         Book book = bookRepository.findByTitle(title);
+        if(book == null){
+            logger.error("getBookByTitle threw error");
+            throw new RuntimeException("Book not found");
+        }
+        logger.info("getBookByTitle method ended");
         return book;
     }
 
